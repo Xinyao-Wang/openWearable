@@ -33,23 +33,41 @@ void FormatSprintParams(const param_mem_t* param, char* buff) {
 void FormatSprintState(const state_t* st, char* buff) {
   sprintf(buff,
           "%u\t"        // timeStamp - uint32_t
-          "%u\t"        // pru0 var - uint32_t
-          "%u\t"        // pru1 var - uint32_t
-          "%u\t"        // cpu var - uint32_t
+          "%f\t"        // p_res - fix16_t
+          "%f\t"        // pm_raw - fix16_t
+          "%f\t"        // pm - fix16_t
+          "%f\t"        // pd - fix16_t
+          "%d\t"        // u - int32_t
+          "%d\t"        // load_r - int32_t
+          "%d\t"        // load_l - int32_t
+          "%u\t"        // sync - uint32_t
+          "%u\t"        // status - uint32_t
           "\n",
           st->time,
-          st->pru0var,
-          st->pru1var,
-          st->cpudata.cpuvar
+          fix16_to_float(st->p_res),
+          fix16_to_float(st->pam_state.pm_raw),
+          fix16_to_float(st->pam_state.pm),
+          fix16_to_float(st->pam_state.pd),
+          st->pam_state.u,
+          st->load_r,
+          st->load_l,
+          st->sync_state,
+          st->status
           );
 }
 
 void FormatSprintStateHeader(char* buff) {
   sprintf(buff,
           "\n# frame\t"
-          "pru0val\t"
-          "pru1val\t"
-          "cpuval\t"
+          "p_res\t"
+          "pm_raw\t"
+          "pm\t"
+          "pd\t"
+          "u\t"
+          "load_r\t"
+          "load_l\t"
+          "sync\t"
+          "status\t"
           "\n");
 }
 
